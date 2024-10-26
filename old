@@ -1,0 +1,110 @@
+// import { useState, useEffect } from "react";
+// import BannerImage from "../../assets/image.png";
+// import BannerImage1 from "../../assets/image1.png";
+// import BannerImage2 from "../../assets/image2.png";
+
+
+// const Banner = () => {
+//     const bannerImages = [
+//         {
+//             image: BannerImage,
+//             title: "Washing Machine Repair",
+//             description:
+//                 "Whether your washing machine is front loading or top loading, our experts can provide fast and efficient repair to get it working again.",
+//         },
+//         {
+//             image: BannerImage1,
+//             title: "Refrigerator Repair",
+//             description:
+//                 "Whether your refrigerator is front loading or top loading, our experts can provide fast and efficient repair to get it working again.",
+//         },
+//         {
+//             image: BannerImage2,
+//             title: "Air Conditioner Repair",
+//             description: "Whether your air conditioner is front loading or top loading, our experts can provide fast and efficient repair to get it working again.",
+//         }
+//     ];
+
+//     const [currentIndex, setCurrentIndex] = useState(0);
+
+//     useEffect(() => {
+//         const interval = setInterval(() => {
+//             setCurrentIndex((prevIndex) =>
+//                 prevIndex === bannerImages.length - 1 ? 0 : prevIndex + 1
+//             );
+//         }, 5000); // Change image every 5 seconds
+
+//         return () => clearInterval(interval);
+//     }, [bannerImages.length]);
+
+//     return (
+//         <div className="relative h-screen overflow-hidden">
+//             {/* Slider container */}
+//             <div
+//                 className="flex transition-transform duration-1000 ease-in-out"
+//                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+//             >
+//                 {bannerImages.map((banner, index) => (
+//                     <div
+//                         key={index}
+//                         className="flex-shrink-0 w-full h-screen bg-center bg-cover"
+//                         style={{ backgroundImage: `url(${banner.image})` }}
+//                     >
+//                         {/* Dark overlay */}
+//                         <div className="absolute inset-0 bg-black opacity-40"></div>
+
+//                         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
+//                             <h1 className="mb-4 text-4xl font-bold md:text-6xl">
+//                                 {banner.title}
+//                             </h1>
+//                             <p className="mb-8 text-lg md:text-xl">{banner.description}</p>
+
+//                             <div className="flex justify-center gap-4">
+//                                 <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+//                                     Our Services
+//                                 </button>
+//                                 <button className="px-4 py-2 font-bold text-white bg-gray-800 rounded hover:bg-gray-900">
+//                                     Get In Touch
+//                                 </button>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 ))}
+//             </div>
+
+//             {/* Navigation arrows */}
+//             <div className="absolute transform -translate-y-1/2 left-4 top-1/2">
+//                 <button
+//                     onClick={() =>
+//                         setCurrentIndex((prevIndex) =>
+//                             prevIndex === 0 ? bannerImages.length - 1 : prevIndex - 1
+//                         )
+//                     }
+//                     className="text-2xl text-white"
+//                 >
+//                     {"← PREV"}
+//                 </button>
+//             </div>
+//             <div className="absolute transform -translate-y-1/2 right-4 top-1/2">
+//                 <button
+//                     onClick={() =>
+//                         setCurrentIndex((prevIndex) =>
+//                             prevIndex === bannerImages.length - 1 ? 0 : prevIndex + 1
+//                         )
+//                     }
+//                     className="text-2xl text-white"
+//                 >
+//                     {"NEXT →"}
+//                 </button>
+//             </div>
+
+//             {/* Scroll down indicator */}
+//             <div className="absolute text-center bottom-8">
+//                 <p className="text-sm text-white">Scroll Down</p>
+//                 <div className="text-2xl text-white animate-bounce">↓</div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Banner;
