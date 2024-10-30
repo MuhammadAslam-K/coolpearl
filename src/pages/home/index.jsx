@@ -1,25 +1,30 @@
+import Navbar from "../../components/navbar"
 import Banner from "../../components/banner"
-import RepairCard from "../../components/serviceCard"
 import Footer from "../../components/footer"
 import FooterResponsive from "../../components/footer/responsive"
-import Navbar from "../../components/navbar"
+import { Suspense, lazy } from "react"
+const Services = lazy(() => import("../../components/services"))
+const RecentWorks = lazy(() => import("../../components/recentWorks"))
+
 
 function Index() {
 
     return (
-        <div>
+        <div className="bg-gray-100">
             <div className="z-50">
                 <Navbar />
             </div>
             <Banner />
 
             {/* Services Section */}
-            <div className="flex flex-wrap h-full gap-3 p-5 mt-20 justify-evenly">
-                <RepairCard />
-                <RepairCard />
-                <RepairCard />
-                <RepairCard />
-            </div>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Services />
+            </Suspense>
+
+            {/* RecentWorks */}
+            <Suspense fallback={<div>Loading...</div>}>
+                <RecentWorks />
+            </Suspense>
 
             <div className="hidden w-full mt-10 bg-black lg:block">
                 <Footer />

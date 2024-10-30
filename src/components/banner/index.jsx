@@ -1,42 +1,33 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import BannerImage from "../../assets/image.png";
-import BannerImage1 from "../../assets/image1.png";
-import BannerImage2 from "../../assets/image2.png";
+import { getActiveBanners } from "../../apis/firebase/banner";
 
 
 const Banner = () => {
-    const bannerImages = [
-        {
-            image: BannerImage,
-            title: "Washing Machine Repair",
-            description:
-                "Whether your washing machine is front loading or top loading, our experts can provide fast and efficient repair to get it working again.",
-        },
-        {
-            image: BannerImage1,
-            title: "Refrigerator Repair",
-            description:
-                "Whether your refrigerator is front loading or top loading, our experts can provide fast and efficient repair to get it working again.",
-        },
-        {
-            image: BannerImage2,
-            title: "Air Conditioner Repair",
-            description: "Whether your air conditioner is front loading or top loading, our experts can provide fast and efficient repair to get it working again.",
-        }
-    ];
-
+    const [banners, setBanners] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [showText, setShowText] = useState(false); // State to control text visibility
+    const [showText, setShowText] = useState(false);
+
+
+    const handleFetchBanners = async () => {
+        const banners = await getActiveBanners();
+        console.log('banners', banners)
+        setBanners(banners);
+    }
+
+
+    useEffect(() => {
+        handleFetchBanners()
+    }, [])
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % banners?.length);
             setShowText(false); // Hide text when changing the image
         }, 5000); // Change image every 5 seconds
 
         return () => clearInterval(interval);
-    }, [bannerImages.length]);
+    }, [banners.length]);
 
     useEffect(() => {
         // Delay showing text for a brief moment after the image has settled
@@ -54,7 +45,7 @@ const Banner = () => {
                     key={currentIndex}
                     className="absolute inset-0 flex items-center justify-center"
                     style={{
-                        backgroundImage: `url(${bannerImages[currentIndex].image})`,
+                        backgroundImage: `url(${banners[currentIndex]?.imageUrl})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -76,7 +67,7 @@ const Banner = () => {
                                 animate={{ y: 0, opacity: 1 }} // Move to position and fade in
                                 transition={{ duration: 0.8 }} // Transition duration for title
                             >
-                                {bannerImages[currentIndex].title}
+                                {banners[currentIndex]?.name}
                             </motion.h1>
 
                             {/* Description Animation */}
@@ -86,7 +77,7 @@ const Banner = () => {
                                 animate={{ y: 0, opacity: 1 }} // Move to position and fade in
                                 transition={{ duration: 0.8, delay: 0.2 }} // Transition duration for description
                             >
-                                {bannerImages[currentIndex].description}
+                                {banners[currentIndex]?.description}
                             </motion.p>
                         </div>
                     )}
@@ -97,7 +88,7 @@ const Banner = () => {
             <div className="absolute hidden transform -translate-y-1/2 left-4 top-1/2 md:block">
                 <button
                     onClick={() =>
-                        setCurrentIndex((prevIndex) => (prevIndex === 0 ? bannerImages.length - 1 : prevIndex - 1))
+                        setCurrentIndex((prevIndex) => (prevIndex === 0 ? banners?.length - 1 : prevIndex - 1))
                     }
                     className="text-2xl text-white"
                 >
@@ -107,18 +98,12 @@ const Banner = () => {
             <div className="absolute hidden transform -translate-y-1/2 right-4 top-1/2 md:block">
                 <button
                     onClick={() =>
-                        setCurrentIndex((prevIndex) => (prevIndex === bannerImages.length - 1 ? 0 : prevIndex + 1))
+                        setCurrentIndex((prevIndex) => (prevIndex === banners?.length - 1 ? 0 : prevIndex + 1))
                     }
                     className="text-2xl text-white"
                 >
                     {"NEXT →"}
                 </button>
-            </div>
-
-            {/* Scroll down indicator */}
-            <div className="absolute text-center transform -translate-x-1/2 left-1/2 bottom-8 animate-bounce" >
-                <p className="text-sm text-white">Scroll Down</p>
-                <div className="text-2xl text-white cursor-pointer">↓</div>
             </div>
         </div>
     );

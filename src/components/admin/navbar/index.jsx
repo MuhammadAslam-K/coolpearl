@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
 import { useEffect } from 'react';
 
@@ -21,9 +21,9 @@ const AdminNavbar = () => {
     return (
         <nav className="flex flex-col items-center justify-between p-4 text-white bg-blue-900 shadow-md md:flex-row">
             {/* Logo Section */}
-            <div className="mb-4 md:mb-0">
+            <Link to="/admin" className="mb-4 md:mb-0">
                 <img src={logo} alt="Logo" className="h-16 mx-auto md:mx-0 md:ms-3" />
-            </div>
+            </Link>
 
             {/* Admin Navigation Links */}
             <div className="flex flex-col items-center space-y-2 md:flex-row md:space-y-0 md:space-x-4">

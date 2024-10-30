@@ -4,7 +4,7 @@ import email from '../../assets/icons/email.png'
 
 const Navbar = () => {
     return (
-        <nav className="flex flex-col items-center justify-between p-4 text-white bg-gray-900 shadow-md md:flex-row">
+        <nav className="flex flex-col items-center justify-between p-4 text-white bg-black shadow-md md:flex-row">
             <div className="mb-4 md:mb-0">
                 <img src={logo} alt="Logo" className="h-16 mx-auto md:mx-0 md:ms-3" />
             </div>
