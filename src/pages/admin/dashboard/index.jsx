@@ -7,6 +7,7 @@ import AddAndUpdate from '../../../components/admin/addAndEdit'
 import { deleteBanner, getAllBanners } from '../../../apis/firebase/banner'
 import { deleteServices, getAllServices } from '../../../apis/firebase/services'
 import { toast } from 'react-toastify'
+import { deleteRecentWork, getAllRecentWorks } from '../../../apis/firebase/recentWorks'
 
 function Index() {
     const [activeTab, setActiveTab] = useState('Banner')
@@ -15,6 +16,7 @@ function Index() {
     const [data, setData] = useState({
         banners: null,
         services: null,
+        recentWorks: null,
         selectedData: null
     })
 
@@ -94,10 +96,17 @@ function Index() {
         setData({ ...data, services: res })
     }
 
+    const handleFetchRecentWorks = async () => {
+        const res = await getAllRecentWorks()
+        setData({ ...data, recentWorks: res })
+    }
+
     const handleDelete = async (id) => {
         try {
             toast.loading(`Please wait while we are deleting the ${activeTab}`)
-            const res = activeTab === 'Banner' ? await deleteBanner(id) : await deleteServices(id)
+            const res = activeTab === 'Banner' ? await deleteBanner(id)
+                : activeTab === 'Services' ? await deleteServices(id)
+                    : await deleteRecentWork(id)
 
             toast.dismiss()
             if (res) {
@@ -106,6 +115,8 @@ function Index() {
                     handleFetchBanners()
                 } else if (activeTab === 'Services') {
                     handleFetchServices()
+                } else if (activeTab === 'Recent Work') {
+                    handleFetchRecentWorks()
                 }
             }
         } catch (error) {
@@ -118,6 +129,8 @@ function Index() {
             handleFetchBanners()
         } else if (activeTab === 'Services') {
             handleFetchServices()
+        } else if (activeTab === 'Recent Work') {
+            handleFetchRecentWorks()
         }
     }, [activeTab, addAndUpdatePage])
 
@@ -142,13 +155,17 @@ function Index() {
                     <div className="flex justify-between w-full mt-10">
                         <div className="flex">
 
-                            <button className={`px-10 py-2 w-1/2 ${activeTab === 'Banner' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                            <button className={`px-10 py-2  ${activeTab === 'Banner' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
                                 onClick={() => setActiveTab('Banner')}>
                                 Banner
                             </button>
-                            <button className={`px-10 py-2 w-1/2 ${activeTab === 'Services' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                            <button className={`px-10 py-2  ${activeTab === 'Services' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
                                 onClick={() => setActiveTab('Services')} >
                                 Services
+                            </button>
+                            <button className={`px-10 py-2  ${activeTab === 'Recent Work' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                                onClick={() => setActiveTab('Recent Work')} >
+                                Recent Works
                             </button>
 
                         </div>
@@ -180,6 +197,18 @@ function Index() {
                             ) : (
                                 <div className="p-4 text-center text-gray-500">
                                     No Services Available
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {activeTab === 'Recent Work' && (
+                        <div className="mt-2">
+                            {data?.recentWorks?.length > 0 ? (
+                                <Table columns={columns} data={data.recentWorks} />
+                            ) : (
+                                <div className="p-4 text-center text-gray-500">
+                                    No Recent Woks Available
                                 </div>
                             )}
                         </div>

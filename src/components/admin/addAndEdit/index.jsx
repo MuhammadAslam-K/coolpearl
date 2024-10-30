@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { addBanner, getBannerById, updateBanner } from "../../../apis/firebase/banner";
 import { toast } from "react-toastify";
 import { addServices, getServicesById, updateServices } from "../../../apis/firebase/services";
+import { addRecentWork, getRecentWorkById, updateRecentWork } from "../../../apis/firebase/recentWorks";
 
 function Index({ title, onClose, isAdd, selectedData }) {
     console.log('selectedData', selectedData)
@@ -35,6 +36,8 @@ function Index({ title, onClose, isAdd, selectedData }) {
                 res = await addBanner(data)
             } else if (title === 'Add Services') {
                 res = await addServices(data)
+            } else if (title === 'Add Recent Work') {
+                res = await addRecentWork(data)
             }
             if (res) {
                 toast.dismiss()
@@ -53,6 +56,8 @@ function Index({ title, onClose, isAdd, selectedData }) {
                 res = await getBannerById(selectedData)
             } else if (title === 'Update Services') {
                 res = await getServicesById(selectedData)
+            } else if (title === 'Update Recent Work') {
+                res = await getRecentWorkById(selectedData)
             }
             setData({ ...res, imageFile: null })
             setSelectedImageUrl(res?.imageUrl)
@@ -70,6 +75,8 @@ function Index({ title, onClose, isAdd, selectedData }) {
                 res = await updateBanner(selectedData, updateData, imageChanged)
             } else if (title === 'Update Services') {
                 res = await updateServices(selectedData, updateData, imageChanged)
+            } else if (title === 'Update Recent Work') {
+                res = await updateRecentWork(selectedData, updateData, imageChanged)
             }
 
             toast.dismiss()

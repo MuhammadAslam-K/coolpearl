@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
+import { motion } from "framer-motion";
 import RecentWorksCard from './card';
 import { getActiveServices } from '../../apis/firebase/services';
+// import { getActiveRecentWorks } from '../../apis/firebase/recentWorks';
 
 function Index() {
     const [services, setServices] = useState([]);
@@ -39,19 +41,43 @@ function Index() {
     }, []);
 
     return (
-        <div
-            className="flex flex-wrap justify-center gap-4"
-            ref={sectionRef} // Attach observer to this section
-        >
-            {services?.map((works, index) => (
-                <RecentWorksCard
-                    key={index}
-                    image={works?.imageUrl}
-                    title={works?.name}
-                    description={works?.description}
-                    isVisible={isVisible} // Pass visibility state to each card
-                />
-            ))}
+        <div>
+
+            <motion.h2
+                className="mt-20 text-5xl font-bold text-center"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.8 }}
+            >
+                Recent Works
+            </motion.h2>
+
+            {/* Animating the new subheading for Recent Works */}
+            <motion.h2
+                className="mt-2 mb-5 text-2xl text-center"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+            >
+                Discover the passion and precision behind our latest projects.
+            </motion.h2>
+
+            <div
+                className="flex flex-wrap justify-center gap-4 mt-10"
+                ref={sectionRef} // Attach observer to this section
+            >
+                {services?.map((works, index) => (
+                    <RecentWorksCard
+                        key={index}
+                        image={works?.imageUrl}
+                        title={works?.name}
+                        description={works?.description}
+                        isVisible={isVisible} // Pass visibility state to each card
+                    />
+                ))}
+            </div>
         </div>
     );
 }
