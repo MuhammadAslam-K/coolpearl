@@ -10,7 +10,7 @@ const RecentWorks = lazy(() => import("../../components/recentWorks"))
 function Index() {
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-gray-100 max-w-screen overflow-x-hidden">
             <div className="z-50">
                 <Navbar />
             </div>
@@ -29,7 +29,7 @@ function Index() {
             <div className="hidden w-full mt-10 bg-black lg:block">
                 <Footer />
             </div>
-            <div className="block mt-10 mb-10 bg-black lg:hidden">
+            <div className="block mt-10 bg-black lg:hidden">
                 <FooterResponsive />
             </div>
 

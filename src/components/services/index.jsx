@@ -1,20 +1,47 @@
 import { motion } from "framer-motion";
 import ServiceCard from "./serviceCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getActiveServices } from "../../apis/firebase/services";
 
 
 function Index() {
     const [services, setServices] = useState([]);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
 
     const handleFetchServices = async () => {
         const services = await getActiveServices();
-        console.log('services', services)
         setServices(services);
     }
 
     useEffect(() => {
         handleFetchServices()
+
+        // Intersection Observer to detect visibility of the section
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting) {
+                    // Wait for 1 second before triggering the animation
+                    setTimeout(() => {
+                        setIsVisible(true); // Trigger animation when section is visible
+                    }, 100);
+                } else {
+                    setIsVisible(false); // Reset animation when not visible
+                }
+            },
+            { threshold: 0.1 } // Trigger when 10% of the section is visible
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.disconnect();
+            }
+        };
     }, [])
 
 
@@ -23,7 +50,7 @@ function Index() {
             <div>
                 {/* Animating the "Services" heading */}
                 <motion.h2
-                    className="mt-20 text-5xl font-bold text-center"
+                    className="mt-20 text-3xl md:text-4xl lg:text-5xl font-bold text-center"
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -50 }}
@@ -34,7 +61,7 @@ function Index() {
 
                 {/* Animating the "Explore Our Services" subheading */}
                 <motion.h2
-                    className="mt-2 text-2xl text-center"
+                    className="mt-2 text-xl md:text-2xl text-center"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
@@ -45,7 +72,8 @@ function Index() {
             </div>
 
 
-            <div className="flex flex-wrap h-full gap-3 p-5 mt-10 justify-evenly">
+            <div className="flex flex-wrap h-full gap-3 p-5 mt-10 justify-evenly"
+                ref={sectionRef}>
                 {services?.map((service, index) => (
 
                     <ServiceCard
@@ -53,6 +81,8 @@ function Index() {
                         image={service?.imageUrl}
                         title={service?.name}
                         description={service?.description}
+                        isVisible={isVisible}
+                        delay={index * 0.2}
                     />
 
                 ))}

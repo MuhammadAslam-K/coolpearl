@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import RecentWorksCard from './card';
 import { getActiveServices } from '../../apis/firebase/services';
-// import { getActiveRecentWorks } from '../../apis/firebase/recentWorks';
 
 function Index() {
     const [services, setServices] = useState([]);
@@ -22,8 +21,12 @@ function Index() {
             (entries) => {
                 const entry = entries[0];
                 if (entry.isIntersecting) {
-                    setIsVisible(true); // Trigger animation when section is visible
-                    observer.disconnect(); // Stop observing once visible
+                    // Wait for 1 second before triggering the animation
+                    setTimeout(() => {
+                        setIsVisible(true); // Trigger animation when section is visible
+                    }, 100);
+                } else {
+                    setIsVisible(false); // Reset animation when not visible
                 }
             },
             { threshold: 0.1 } // Trigger when 10% of the section is visible
@@ -42,31 +45,30 @@ function Index() {
 
     return (
         <div>
-
             <motion.h2
-                className="mt-20 text-5xl font-bold text-center"
+                className="mt-20 text-3xl md:text-4xl lg:text-5xl font-bold text-center"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
             >
                 Recent Works
             </motion.h2>
 
-            {/* Animating the new subheading for Recent Works */}
             <motion.h2
-                className="mt-2 mb-5 text-2xl text-center"
+                className="mt-2 text-xl md:text-2xl text-center"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
             >
                 Discover the passion and precision behind our latest projects.
             </motion.h2>
 
+
             <div
-                className="flex flex-wrap justify-center gap-4 mt-10"
-                ref={sectionRef} // Attach observer to this section
+                className="flex flex-wrap justify-center gap-4 p-5 md:p-0 mt-10"
+                ref={sectionRef}
             >
                 {services?.map((works, index) => (
                     <RecentWorksCard
@@ -74,7 +76,8 @@ function Index() {
                         image={works?.imageUrl}
                         title={works?.name}
                         description={works?.description}
-                        isVisible={isVisible} // Pass visibility state to each card
+                        isVisible={isVisible}
+                        delay={index * 0.2}
                     />
                 ))}
             </div>
