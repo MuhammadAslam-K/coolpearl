@@ -1,20 +1,20 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import RecentWorksCard from './card';
-import { getActiveServices } from '../../apis/firebase/services';
+import { getActiveRecentWorks } from '../../apis/firebase/recentWorks';
 
 function Index() {
     const [services, setServices] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef(null);
 
-    const handleFetchServices = async () => {
-        const services = await getActiveServices();
+    const handleFetchWorks = async () => {
+        const services = await getActiveRecentWorks();
         setServices(services);
     };
 
     useEffect(() => {
-        handleFetchServices();
+        handleFetchWorks();
 
         // Intersection Observer to detect visibility of the section
         const observer = new IntersectionObserver(
@@ -46,7 +46,7 @@ function Index() {
     return (
         <div>
             <motion.h2
-                className="mt-20 text-3xl md:text-4xl lg:text-5xl font-bold text-center"
+                className="mt-20 text-3xl font-bold text-center md:text-4xl lg:text-5xl"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -50 }}
@@ -56,7 +56,7 @@ function Index() {
             </motion.h2>
 
             <motion.h2
-                className="mt-2 text-xl md:text-2xl text-center"
+                className="mt-2 text-xl text-center md:text-2xl"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
@@ -67,7 +67,7 @@ function Index() {
 
 
             <div
-                className="flex flex-wrap justify-center gap-4 p-5 md:p-0 mt-10"
+                className="flex flex-wrap justify-center gap-4 p-5 mt-10 md:p-0"
                 ref={sectionRef}
             >
                 {services?.map((works, index) => (

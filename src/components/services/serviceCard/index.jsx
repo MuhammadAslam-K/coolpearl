@@ -21,7 +21,7 @@ const ServiceCard = ({ image, title, description, isVisible, delay }) => {
             <div className="absolute inset-0 flex items-center p-4 sm:p-6 md:p-8">
                 <div className="relative z-10 text-white w-[80%]">
                     {/* Title */}
-                    <div className="mb-1 sm:mb-2 text-xl sm:text-2xl font-semibold truncate">
+                    <div className="mb-1 text-xl font-semibold truncate sm:mb-2 sm:text-2xl">
                         {title}
                     </div>
 
@@ -29,12 +29,12 @@ const ServiceCard = ({ image, title, description, isVisible, delay }) => {
                     <div className="w-12 h-1 mb-3 bg-yellow-400"></div>
 
                     {/* Subtext with Animation and Line Clamp for mobile */}
-                    <div className="group relative">
-                        <div className="text-sm sm:text-base line-clamp-3 overflow-hidden">
+                    <div className="relative group">
+                        <div className="overflow-hidden text-sm sm:text-base line-clamp-3">
                             {description}
                         </div>
                         {/* Tooltip for full description on hover */}
-                        <div className="absolute left-0 -bottom-2 w-full bg-black/90 p-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
+                        <div className="absolute left-0 z-20 w-full p-2 transition-opacity duration-200 rounded opacity-0 -bottom-2 bg-black/90 group-hover:opacity-100">
                             {description}
                         </div>
                     </div>

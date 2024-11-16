@@ -11,6 +11,7 @@ function Index() {
 
     const handleFetchServices = async () => {
         const services = await getActiveServices();
+        console.log('services', services)
         setServices(services);
     }
 
@@ -50,7 +51,7 @@ function Index() {
             <div>
                 {/* Animating the "Services" heading */}
                 <motion.h2
-                    className="mt-20 text-3xl md:text-4xl lg:text-5xl font-bold text-center"
+                    className="mt-20 text-3xl font-bold text-center md:text-4xl lg:text-5xl"
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -50 }}
@@ -61,7 +62,7 @@ function Index() {
 
                 {/* Animating the "Explore Our Services" subheading */}
                 <motion.h2
-                    className="mt-2 text-xl md:text-2xl text-center"
+                    className="mt-2 text-xl text-center md:text-2xl"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
