@@ -4,16 +4,12 @@ import { motion } from "framer-motion";
 const ServiceCard = ({ image, title, description, isVisible, delay }) => {
     return (
         <motion.div
-            className="relative w-full md:w-[49%] h-[350px] bg-center bg-cover shadow-lg"
+            className="relative w-full md:w-[49%] h-[300px] md:h-[400px] bg-center bg-cover shadow-lg"
             initial={{ opacity: 0, scale: 0.95 }} // Slightly smaller and transparent at start
             animate={isVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }} // Fades in and scales up
             transition={{ duration: 0.6, delay }}
-            style={{
-                backgroundImage: `url(${image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-            }}
         >
+            <img src={image} alt="" className="w-full h-[300px] md:h-[400px]" />
             {/* Overlay */}
             <div className="absolute inset-0 bg-black opacity-50"></div>
 

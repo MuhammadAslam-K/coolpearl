@@ -51,7 +51,7 @@ function Index() {
             <div>
                 {/* Animating the "Services" heading */}
                 <motion.h2
-                    className="mt-20 text-3xl font-bold text-center md:text-4xl lg:text-5xl"
+                    className="mt-10 text-3xl font-bold text-center md:text-4xl lg:text-5xl"
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -50 }}

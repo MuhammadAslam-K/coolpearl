@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import RecentWorksCard from './card';
 import { getActiveRecentWorks } from '../../apis/firebase/recentWorks';
+import { getActiveServices } from '../../apis/firebase/services';
+
 
 function Index() {
     const [services, setServices] = useState([]);
@@ -9,7 +11,7 @@ function Index() {
     const sectionRef = useRef(null);
 
     const handleFetchWorks = async () => {
-        const services = await getActiveRecentWorks();
+        const services = await getActiveServices();
         setServices(services);
     };
 

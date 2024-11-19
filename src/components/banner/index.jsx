@@ -41,19 +41,19 @@ const Banner = () => {
     return (
         <div className="relative h-screen overflow-hidden">
             <AnimatePresence>
-                <motion.div
-                    key={currentIndex}
+                <motion.div key={currentIndex}
                     className="absolute inset-0 flex items-center justify-center"
-                    style={{
-                        backgroundImage: `url(${banners[currentIndex]?.imageUrl})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
                     initial={{ x: "100%", opacity: 0 }} // Start from the right side and transparent
                     animate={{ x: 0, opacity: 20 }} // Slide in from the right and become visible
                     exit={{ x: "-100%", opacity: 0 }} // Slide out to the left and become transparent
                     transition={{ duration: 0.6 }} // 1 second transition duration
                 >
+                    <img
+                        src={banners[currentIndex]?.imageUrl}
+                        alt="Banner"
+                        className="absolute inset-0 object-cover w-full h-full"
+                    />
+
                     {/* Light blue overlay for fade effect */}
                     <div className="absolute inset-0 bg-[#383f4b] opacity-30"></div>
 
